@@ -1,14 +1,13 @@
 package com.example.dutpractice1.models;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "People")
+@Table(name = "Person")
 public class Person {
     @Id
     @Column(name = "id")
@@ -21,9 +20,9 @@ public class Person {
     private String username;
 
 
-    @Column(name = "age")
-    @Min(value = 0, message = "Age should be greater then 0!")
-    private int age;
+    @Column(name = "year_of_birth")
+    @Min(value = 1900, message = "Year of birth cant be more than 1900! It's unreal!")
+    private int yearOfBirth;
 
 
     @Column(name = "email")
@@ -31,12 +30,17 @@ public class Person {
     @NotEmpty(message = "Email should be not empty!")
     private String email;
 
+    @Column(name="password")
+    @NotEmpty(message = "Password should be not empty!")
+    @Size(min = 8, message = "Password must be more than 8 characters!")
+    private String password;
+
     public Person() {
     }
 
-    public Person(String username, int age, String email) {
+    public Person(String username, int yearOfBirth, String email) {
         this.username = username;
-        this.age = age;
+        this.yearOfBirth = yearOfBirth;
         this.email = email;
     }
 
@@ -56,12 +60,12 @@ public class Person {
         this.username = username;
     }
 
-    public int getAge() {
-        return age;
+    public int getYearOfBirth() {
+        return yearOfBirth;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setYearOfBirth(int yearOfBirth) {
+        this.yearOfBirth = yearOfBirth;
     }
 
     public String getEmail() {
@@ -70,5 +74,13 @@ public class Person {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

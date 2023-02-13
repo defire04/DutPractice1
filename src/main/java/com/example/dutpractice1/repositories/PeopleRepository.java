@@ -4,7 +4,9 @@ import com.example.dutpractice1.models.Person;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public interface PersonRepository extends JpaRepository<Person, Integer> {
+import java.util.Optional;
 
+@Repository
+public interface PeopleRepository extends JpaRepository<Person, Integer> {
+    Optional<Person> findByUsername(String username);
 }
