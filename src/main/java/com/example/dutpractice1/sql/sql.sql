@@ -10,5 +10,6 @@ CREATE TABLE Person
 
 
 INSERT INTO Person (username, year_of_birth, email, "password") VALUES ('admin', 10, 'admin@gmail.com','1234567');
+INSERT INTO Person (username, year_of_birth, email, "password") VALUES ('admin2', 11, 'admin1@gmail.com','12345678');
 
 SELECT * FROM Person;
