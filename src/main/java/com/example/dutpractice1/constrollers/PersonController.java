@@ -4,28 +4,25 @@ import com.example.dutpractice1.models.Person;
 import com.example.dutpractice1.security.PersonDetails;
 import com.example.dutpractice1.services.PeopleService;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @RestController
-@RequestMapping("")
+@RequestMapping()
 public class PersonController {
-
     public final PeopleService peopleService;
 
     public PersonController(PeopleService peopleService) {
         this.peopleService = peopleService;
     }
 
-
-    @GetMapping()
+    @GetMapping("/users")
     public List<Person> getPeople() {
         return peopleService.findAll();
     }
@@ -37,5 +34,11 @@ public class PersonController {
         return personDetails.getPerson();
     }
 
+    @PostMapping("/create")
+    public Person create(@RequestBody @Valid Person person) {
 
+        System.out.println("================================");
+        peopleService.save(person);
+        return person;
+    }
 }
