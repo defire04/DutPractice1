@@ -8,8 +8,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "User")
-public class User {
+@Table(name = "People")
+public class Person {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,10 +31,10 @@ public class User {
     @NotEmpty(message = "Email should be not empty!")
     private String email;
 
-    public User() {
+    public Person() {
     }
 
-    public User(String username, int age, String email) {
+    public Person(String username, int age, String email) {
         this.username = username;
         this.age = age;
         this.email = email;
