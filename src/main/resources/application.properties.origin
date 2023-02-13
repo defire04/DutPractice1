@@ -1,0 +1,8 @@
+spring.mvc.hiddenmethod.filter.enabled=true
+
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.datasource.url=jdbc:postgresql://localhost:5432/dut_practice
+spring.datasource.username=
+spring.datasource.password=
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.properties.hibernate.show_sql=true
