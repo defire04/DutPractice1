@@ -1,7 +1,6 @@
 package com.example.dutpractice1.constrollers;
 
 import com.example.dutpractice1.dto.PersonInfoDTO;
-import com.example.dutpractice1.dto.PersonLoginDTO;
 import com.example.dutpractice1.models.Person;
 import com.example.dutpractice1.security.PersonDetails;
 import com.example.dutpractice1.services.PeopleService;
@@ -24,14 +23,16 @@ public class PeopleController {
     public final PeopleService peopleService;
     public final AuthService registrationService;
 
-    public PeopleController(PeopleService peopleService, AuthService registrationService) {
+    public final DTOController dtoController;
+    public PeopleController(PeopleService peopleService, AuthService registrationService, ModelMapper modelMapper, DTOController dtoController) {
         this.peopleService = peopleService;
         this.registrationService = registrationService;
+        this.dtoController = dtoController;
     }
 
     @GetMapping("/users")
     public List<PersonInfoDTO> showAll() {
-        return peopleService.findAll().stream().map(this::convertToPersonInfoDTO).collect(Collectors.toList());
+        return peopleService.findAll().stream().map(dtoController::convertToPersonInfoDTO).collect(Collectors.toList());
     }
 
     @GetMapping("/userInfo")
@@ -67,8 +68,5 @@ public class PeopleController {
         return personDetails.getPerson();
     }
 
-    private PersonInfoDTO convertToPersonInfoDTO(Person person){
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(person, PersonInfoDTO.class);
-    }
+
 }

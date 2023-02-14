@@ -1,10 +1,13 @@
 package com.example.dutpractice1.constrollers;
 
 
+import com.example.dutpractice1.dto.PersonInfoDTO;
 import com.example.dutpractice1.dto.PersonLoginDTO;
+import com.example.dutpractice1.dto.PersonRegistrationDTO;
 import com.example.dutpractice1.models.Person;
 import com.example.dutpractice1.services.AuthService;
 import com.example.dutpractice1.util.PersonValidator;
+import org.modelmapper.ModelMapper;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,39 +20,33 @@ public class AuthController {
 
     private final PersonValidator personValidator;
     private final AuthService registrationService;
+    public final DTOController dtoController;
 
-    public AuthController(PersonValidator personValidator, AuthService registrationService) {
+    public AuthController(PersonValidator personValidator, AuthService registrationService, ModelMapper modelMapper, DTOController dtoController) {
         this.personValidator = personValidator;
         this.registrationService = registrationService;
-    }
 
-//    @GetMapping("/login")
-//    public String loginPage(){
-//        return "auth/login";
-//    }
+        this.dtoController = dtoController;
+    }
 
     @PostMapping("/login")
     public PersonLoginDTO loginPage(@RequestBody @Valid PersonLoginDTO personLoginDTO){
         return registrationService.login(personLoginDTO);
     }
 
-    @GetMapping("/registration")
-    public String registrationPage(@ModelAttribute("person") Person person) {
-        return "auth/registration";
-    }
-
     @PostMapping("/registration")
-    public String performRegistration(@ModelAttribute("person") @Valid Person person,
+    public PersonInfoDTO performRegistration(@RequestBody @Valid PersonRegistrationDTO personRegistrationDTO,
                                       BindingResult bindingResult) {
-
+        Person person = dtoController.convertPersonRegistrationDTOToPerson(personRegistrationDTO);
         personValidator.validate(person, bindingResult);
 
         if(bindingResult.hasErrors()){
-            return "/auth/registration";
+            throw new RuntimeException("Invalid data");
         }
-
         registrationService.register(person);
-        return "redirect:/auth/login";
+        return dtoController.convertToPersonInfoDTO(person);
     }
+
+
 
 }

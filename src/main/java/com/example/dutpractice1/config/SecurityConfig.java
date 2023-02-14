@@ -2,6 +2,7 @@ package com.example.dutpractice1.config;
 
 
 import com.example.dutpractice1.services.PersonDetailsService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -58,5 +59,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-
+    @Bean
+    public ModelMapper modelMapper(){
+        return new ModelMapper();
+    }
 }
