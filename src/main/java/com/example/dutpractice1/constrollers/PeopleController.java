@@ -41,15 +41,15 @@ public class PeopleController {
     }
 
     @PostMapping("/create")
-    public Person create(@RequestBody @Valid Person person) {
+    public PersonInfoDTO create(@RequestBody @Valid Person person) {
         registrationService.register(person);
-        return person;
+        return dtoController.convertToPersonInfoDTO(person);
     }
 
     @PatchMapping("/update/{id}")
-    public Person update(@RequestBody @Valid Person person, @PathVariable("id") int id) {
+    public PersonInfoDTO update(@RequestBody @Valid Person person, @PathVariable("id") int id) {
         peopleService.update(id, person);
-        return person;
+        return dtoController.convertToPersonInfoDTO(person);
     }
 
     @GetMapping("/admin")
