@@ -93,11 +93,11 @@
     </head>
     <body>
         <form name="f" method="post" action="/process_login">
-            <input
-                type="hidden"
-                th:name="${_csrf.parameterName}"
-                th:value="${_csrf.token}"
-            />
+<!--            <input-->
+<!--                type="hidden"-->
+<!--                th:name="${_csrf.parameterName}"-->
+<!--                th:value="${_csrf.token}"-->
+<!--            />-->
             <h2>
                 <span class="entypo-login"><i class="fa fa-sign-in"></i></span>
                 Login
@@ -113,7 +113,7 @@
                 type="text"
                 name="username"
                 id="username"
-                placeholder="username"
+                placeholder="email"
             />
             <span class="entypo-key inputPassIcon">
                 <i class="fa fa-key"></i>

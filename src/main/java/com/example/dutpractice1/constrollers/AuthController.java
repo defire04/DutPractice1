@@ -1,33 +1,36 @@
 package com.example.dutpractice1.constrollers;
 
 
+import com.example.dutpractice1.dto.PersonLoginDTO;
 import com.example.dutpractice1.models.Person;
-import com.example.dutpractice1.services.RegistrationService;
+import com.example.dutpractice1.services.AuthService;
 import com.example.dutpractice1.util.PersonValidator;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@Controller
+//@Controller
 @RequestMapping("auth")
+@RestController
 public class AuthController {
 
     private final PersonValidator personValidator;
-    private final RegistrationService registrationService;
+    private final AuthService registrationService;
 
-    public AuthController(PersonValidator personValidator, RegistrationService registrationService) {
+    public AuthController(PersonValidator personValidator, AuthService registrationService) {
         this.personValidator = personValidator;
         this.registrationService = registrationService;
     }
 
-    @GetMapping("/login")
-    public String loginPage(){
-        return "auth/login";
+//    @GetMapping("/login")
+//    public String loginPage(){
+//        return "auth/login";
+//    }
+
+    @PostMapping("/login")
+    public PersonLoginDTO loginPage(@RequestBody @Valid PersonLoginDTO personLoginDTO){
+        return registrationService.login(personLoginDTO);
     }
 
     @GetMapping("/registration")
