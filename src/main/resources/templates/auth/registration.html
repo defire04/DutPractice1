@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Registration</title>
+        <style>
+            @import url(http://weloveiconfonts.com/api/?family=entypo);
+            @import url(https://fonts.googleapis.com/css?family=Roboto);
+
+            /* zocial */
+            [class*="entypo-"]:before {
+                font-family: "entypo", sans-serif;
+            }
+
+            *,
+            *:before,
+            *:after {
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+
+            h2 {
+                color: rgba(255, 255, 255, 0.8);
+                margin-left: 12px;
+            }
+
+            body {
+                background: #272125;
+                font-family: "Roboto", sans-serif;
+            }
+
+            form {
+                position: relative;
+                margin: 50px auto;
+                width: 380px;
+                height: auto;
+            }
+
+            input {
+                padding: 16px;
+                border-radius: 7px;
+                background: rgba(255, 255, 255, 0.2);
+                display: block;
+                margin: 15px;
+                width: 300px;
+                color: white;
+                font-size: 18px;
+                height: 54px;
+            }
+
+            input:focus {
+                outline-color: rgba(0, 0, 0, 0);
+                background: rgba(255, 255, 255, 0.95);
+                color: #e74c3c;
+            }
+
+            button {
+                margin: 15px;
+                height: 50px;
+                width: 300px;
+                background: #7be73c;
+                border-radius: 7px;
+                padding: 16px;
+                color: white;
+                font-size: 22px;
+            }
+
+            input::-webkit-input-placeholder {
+                color: white;
+            }
+
+            input:focus::-webkit-input-placeholder {
+                color: #e74c3c;
+            }
+        </style>
+    </head>
+    <body>
+        <form
+            th:method="POST"
+            th:action="@{/auth/registration}"
+            th:object="${person}"
+        >
+            <h2>
+                <span class="entypo-login"><i class="fa fa-sign-in"></i></span>
+                Registration
+            </h2>
+
+            <label for="username"></label
+            ><input
+                type="text"
+                name="username"
+                id="username"
+                th:field="*{username}"
+                placeholder="Username"
+            />
+            <div
+                style="color: red"
+                th:if="${#fields.hasErrors('username')}"
+                th:errors="*{username}"
+            >
+                Username error
+            </div>
+
+            <label for="password"></label
+            ><input
+                type="password"
+                name="password"
+                id="password"
+                th:field="*{password}"
+                placeholder="Password"
+            />
+            <div
+                style="color: red"
+                th:if="${#fields.hasErrors('password')}"
+                th:errors="*{password}"
+            >
+                Password error
+            </div>
+
+            <label for="year-of-birth"></label
+            ><input
+                type="text"
+                name="year-of-birth"
+                id="year-of-birth"
+                th:field="*{yearOfBirth}"
+                placeholder="Year of birth"
+            />
+            <div
+                style="color: red"
+                th:if="${#fields.hasErrors('yearOfBirth')}"
+                th:errors="*{yearOfBirth}"
+            >
+                YearOfBirth error
+            </div>
+            <label for="email"></label
+            ><input
+                type="text"
+                name="email"
+                id="email"
+                th:field="*{email}"
+                placeholder="Email"
+            />
+            <div
+                style="color: red"
+                th:if="${#fields.hasErrors('email')}"
+                th:errors="*{email}"
+            >
+                Email error
+            </div>
+
+            <button type="submit">
+                <span class="">Sign up!</span>
+            </button>
+        </form>
+    </body>
+</html>

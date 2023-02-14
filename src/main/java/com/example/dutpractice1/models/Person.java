@@ -35,6 +35,9 @@ public class Person {
     @Size(min = 8, message = "Password must be more than 8 characters!")
     private String password;
 
+    @Column(name="role")
+    private String role;
+
     public Person() {
     }
 
@@ -82,5 +85,13 @@ public class Person {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

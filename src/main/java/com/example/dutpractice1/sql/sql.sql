@@ -5,11 +5,12 @@ CREATE TABLE Person
     username VARCHAR(100) NOT NULL,
     year_of_birth INT NOT NULL,
     email VARCHAR(100) NOT NULL,
-    password VARCHAR NOT NULL
+    password VARCHAR NOT NULL,
+    role VARCHAR NOT NULL
 );
 
 
-INSERT INTO Person (username, year_of_birth, email, "password") VALUES ('admin', 10, 'admin@gmail.com','1234567');
-INSERT INTO Person (username, year_of_birth, email, "password") VALUES ('admin2', 11, 'admin1@gmail.com','12345678');
+-- INSERT INTO Person (username, year_of_birth, email, "password") VALUES ('admin', 10, 'admin@gmail.com','1234567');
+-- INSERT INTO Person (username, year_of_birth, email, "password") VALUES ('admin2', 11, 'admin1@gmail.com','12345678');
 
 SELECT * FROM Person;

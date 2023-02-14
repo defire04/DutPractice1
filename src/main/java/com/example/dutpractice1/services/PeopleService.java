@@ -38,6 +38,8 @@ public class PeopleService {
         peopleRepository.deleteById(id);
     }
 
-
+    public Optional<Person> findByUsername(String username){
+        return peopleRepository.findByUsername(username);
+    }
 
 }
