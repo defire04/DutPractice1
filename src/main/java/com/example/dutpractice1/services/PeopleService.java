@@ -18,17 +18,26 @@ public class PeopleService {
         this.peopleRepository = peopleRepository;
     }
 
-    public List<Person> findAll() {
-        return peopleRepository.findAll();
-    }
+
     @Transactional
     public void save(Person person) {
         peopleRepository.save(person);
     }
 
+    public List<Person> findAll() {
+        return peopleRepository.findAll();
+    }
+
+    @Transactional
+    public void update(int id, Person updatedPerson) {
+        updatedPerson.setId(id);
+        peopleRepository.save(updatedPerson);
+    }
     @Transactional
     public void delete(int id) {
         peopleRepository.deleteById(id);
     }
+
+
 
 }

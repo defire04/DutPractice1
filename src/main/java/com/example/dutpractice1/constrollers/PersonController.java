@@ -23,12 +23,12 @@ public class PersonController {
     }
 
     @GetMapping("/users")
-    public List<Person> getPeople() {
+    public List<Person> showAll() {
         return peopleService.findAll();
     }
 
     @GetMapping("/userInfo")
-    public Person getUser(){
+    public Person show() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
         return personDetails.getPerson();
@@ -36,9 +36,14 @@ public class PersonController {
 
     @PostMapping("/create")
     public Person create(@RequestBody @Valid Person person) {
-
-        System.out.println("================================");
         peopleService.save(person);
         return person;
     }
+
+    @PatchMapping("/update/{id}")
+    public Person update(@RequestBody @Valid Person person, @PathVariable("id") int id) {
+        peopleService.update(id, person);
+        return person;
+    }
+
 }
