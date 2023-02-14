@@ -42,4 +42,7 @@ public class PeopleService {
         return peopleRepository.findByUsername(username);
     }
 
+    public Optional<Person> findByEmail(String email){
+        return peopleRepository.findByEmail(email);
+    }
 }

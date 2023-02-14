@@ -29,9 +29,7 @@ public class PersonController {
 
     @GetMapping("/userInfo")
     public Person show() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
-        return personDetails.getPerson();
+        return getCurrentUser();
     }
 
     @PostMapping("/create")
@@ -44,6 +42,17 @@ public class PersonController {
     public Person update(@RequestBody @Valid Person person, @PathVariable("id") int id) {
         peopleService.update(id, person);
         return person;
+    }
+
+    @GetMapping("/admin")
+    public String admin() {
+        return getCurrentUser().getUsername() + " you are admin!";
+    }
+
+    public Person getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
+        return personDetails.getPerson();
     }
 
 }
