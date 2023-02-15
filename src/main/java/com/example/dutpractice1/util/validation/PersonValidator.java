@@ -1,8 +1,6 @@
 package com.example.dutpractice1.util.validation;
 
-import com.example.dutpractice1.dto.person.PersonDTO;
-import com.example.dutpractice1.dto.person.PersonLoginDTO;
-import com.example.dutpractice1.dto.person.PersonRegistrationDTO;
+import com.example.dutpractice1.dto.person.*;
 import com.example.dutpractice1.exceptions.PersonIsExistException;
 import com.example.dutpractice1.exceptions.PersonNotFoundException;
 import com.example.dutpractice1.services.PeopleService;
@@ -20,7 +18,7 @@ public class PersonValidator{
     public void validate(PersonDTO personDTO ){
         if(personDTO.getClass() == PersonLoginDTO.class && !peopleService.existsByEmail(personDTO.getEmail())){
             throw new PersonNotFoundException("User with this email not found!");
-        } else if (personDTO.getClass() == PersonRegistrationDTO.class && peopleService.existsByEmail(personDTO.getEmail())) {
+        } else if ((personDTO instanceof IPersonRegistration) && peopleService.existsByEmail(personDTO.getEmail())) {
             throw new PersonIsExistException("Email should be uniq!");
         }
     }

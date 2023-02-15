@@ -1,5 +1,6 @@
 package com.example.dutpractice1.services;
 
+import com.example.dutpractice1.dto.person.PersonDTO;
 import com.example.dutpractice1.dto.person.PersonInfoDTO;
 import com.example.dutpractice1.dto.person.PersonRegistrationDTO;
 import com.example.dutpractice1.models.Person;
@@ -18,7 +19,7 @@ public class UserMapperService {
         return modelMapper.map(person, PersonInfoDTO.class);
     }
 
-    public Person convertPersonRegistrationDTOToPerson(PersonRegistrationDTO personRegistrationDTO){
-        return modelMapper.map(personRegistrationDTO, Person.class);
+    public Person convertPersonDTOToPerson(PersonDTO personDTO){
+        return modelMapper.map(personDTO, Person.class);
     }
 }

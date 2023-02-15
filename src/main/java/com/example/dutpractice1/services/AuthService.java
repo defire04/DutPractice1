@@ -1,8 +1,6 @@
 package com.example.dutpractice1.services;
 
-import com.example.dutpractice1.dto.person.PersonInfoDTO;
-import com.example.dutpractice1.dto.person.PersonLoginDTO;
-import com.example.dutpractice1.dto.person.PersonRegistrationDTO;
+import com.example.dutpractice1.dto.person.*;
 import com.example.dutpractice1.exceptions.PersonIsExistException;
 import com.example.dutpractice1.exceptions.PersonNotFoundException;
 import com.example.dutpractice1.models.Person;
@@ -38,13 +36,16 @@ public class AuthService {
     }
 
     @Transactional
-    public PersonInfoDTO register(PersonRegistrationDTO personRegistrationDTO) {
+    public PersonInfoDTO register(PersonDTO personRegistration) {
 
-        personValidator.validate(personRegistrationDTO);
+        personValidator.validate(personRegistration);
 
-        Person person = userMapperService.convertPersonRegistrationDTOToPerson(personRegistrationDTO);
+        Person person = userMapperService.convertPersonDTOToPerson(personRegistration);
         person.setPassword(passwordEncoder.encode(person.getPassword()));
-        person.setRole("ROLE_USER");
+
+        if (person.getRole() == null){
+            person.setRole("ROLE_USER");
+        }
         peopleRepository.save(person);
 
         return userMapperService.convertToPersonInfoDTO(person);

@@ -22,13 +22,14 @@ public class PasswordConstraintValidator implements ConstraintValidator<Password
                 new WhitespaceRule()));
 
         RuleResult result = validator.validate(new PasswordData(password));
-        if (result.isValid()) {
-            return true;
-        }
-        context.disableDefaultConstraintViolation();
-        context.buildConstraintViolationWithTemplate(String.valueOf(validator.getMessages(result)))
-                .addConstraintViolation();
+        if (!result.isValid()) {
+            context.disableDefaultConstraintViolation();
+            context.buildConstraintViolationWithTemplate(String.valueOf(validator.getMessages(result)))
+                    .addConstraintViolation();
 
-        return false;
+            return false;
+        }
+
+        return true;
     }
 }
