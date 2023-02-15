@@ -32,14 +32,6 @@ public class PersonInfoDTO extends PersonDTO{
         this.yearOfBirth = yearOfBirth;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getRole() {
         return role;
     }

@@ -6,5 +6,13 @@ import javax.validation.constraints.NotEmpty;
 public abstract class PersonDTO {
     @Email
     @NotEmpty(message = "Email should be not empty!")
-    public String email;
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
