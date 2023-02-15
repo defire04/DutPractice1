@@ -21,7 +21,6 @@ public class PeopleService {
         this.passwordEncoder = passwordEncoder;
     }
 
-
     @Transactional
     public void save(Person person) {
         peopleRepository.save(person);

@@ -1,9 +1,14 @@
 package com.example.dutpractice1.services;
 
-import com.example.dutpractice1.dto.PersonLoginDTO;
+import com.example.dutpractice1.dto.person.PersonInfoDTO;
+import com.example.dutpractice1.dto.person.PersonLoginDTO;
+import com.example.dutpractice1.dto.person.PersonRegistrationDTO;
+import com.example.dutpractice1.exceptions.PersonIsExistException;
+import com.example.dutpractice1.exceptions.PersonNotFoundException;
 import com.example.dutpractice1.models.Person;
 import com.example.dutpractice1.repositories.PeopleRepository;
 
+import com.example.dutpractice1.util.validation.PersonValidator;
 import org.springframework.security.authentication.AuthenticationManager;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,27 +25,36 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final PeopleService peopleService;
+    private final UserMapperService userMapperService;
+    private final PersonValidator personValidator;
 
-    public AuthService(PeopleRepository peopleRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, PeopleService peopleService) {
+    public AuthService(PeopleRepository peopleRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, PeopleService peopleService, UserMapperService userMapperService, PersonValidator personValidator) {
         this.peopleRepository = peopleRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.peopleService = peopleService;
+        this.userMapperService = userMapperService;
+        this.personValidator = personValidator;
     }
 
     @Transactional
-    public void register(Person person) {
+    public PersonInfoDTO register(PersonRegistrationDTO personRegistrationDTO) {
+
+        personValidator.validate(personRegistrationDTO);
+
+        Person person = userMapperService.convertPersonRegistrationDTOToPerson(personRegistrationDTO);
         person.setPassword(passwordEncoder.encode(person.getPassword()));
         person.setRole("ROLE_USER");
         peopleRepository.save(person);
+
+        return userMapperService.convertToPersonInfoDTO(person);
     }
 
     public PersonLoginDTO login(PersonLoginDTO personLoginDTO){
-        if(!peopleService.existsByEmail(personLoginDTO.getEmail())){
-            throw new RuntimeException("User not found!");
-        }
+        personValidator.validate(personLoginDTO);
 
-        UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(personLoginDTO.getEmail(), personLoginDTO.getPassword());
+        UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(
+                personLoginDTO.getEmail(), personLoginDTO.getPassword());
 
         // Authenticate the user
         Authentication authentication = authenticationManager.authenticate(authRequest);
@@ -49,8 +63,4 @@ public class AuthService {
 
         return personLoginDTO;
     }
-
-//    public PersonDTO login(PersonDTO personDTO){
-//
-//    }
 }

@@ -1,13 +1,10 @@
-package com.example.dutpractice1.dto;
+package com.example.dutpractice1.dto.person;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-public class PersonLoginDTO {
-    @Email
-    @NotEmpty(message = "Email should be not empty!")
-    private String email;
+public class PersonLoginDTO extends PersonDTO{
     @NotEmpty(message = "Password should be not empty!")
     @Size(min = 8, message = "Password must be more than 8 characters!")
     private String password;
