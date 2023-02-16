@@ -1,19 +1,12 @@
 package com.example.dutpractice1.constrollers;
 
-
 import com.example.dutpractice1.dto.person.PersonInfoDTO;
 import com.example.dutpractice1.dto.person.PersonLoginDTO;
 import com.example.dutpractice1.dto.person.PersonRegistrationDTO;
 import com.example.dutpractice1.security.JWTUtil;
 import com.example.dutpractice1.services.AuthService;
-import com.example.dutpractice1.services.UserMapperService;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
-import java.util.Map;
 
 
 @RestController
@@ -43,6 +36,4 @@ public class AuthController {
         response.setJwtToken(token);
         return response;
     }
-
-
 }

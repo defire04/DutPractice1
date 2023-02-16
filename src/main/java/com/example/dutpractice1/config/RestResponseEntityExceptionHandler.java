@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 //@RestControllerAdvice
 //public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
@@ -43,18 +41,20 @@ public class RestResponseEntityExceptionHandler {
     })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     protected ErrorDTO handleConflict(RuntimeException ex) {
-        return new ErrorDTO(Collections.singletonList(ex.getMessage()), ex.getClass().getSimpleName());
+        return new ErrorDTO(ex.getClass().getSimpleName(), ex.getMessage());
     }
 
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> handleMethodArgumentException(MethodArgumentNotValidException exception) {
-        Map<String, String> errorMap = new HashMap<>();
+    public List<ErrorDTO> handleMethodArgumentException(MethodArgumentNotValidException exception) {
+        List<ErrorDTO> errors = new ArrayList<>();
+
         exception.getBindingResult().getFieldErrors().forEach(error -> {
-            errorMap.put(error.getField(), error.getDefaultMessage());
+            errors.add(new ErrorDTO(error.getClass().getSimpleName(), error.getDefaultMessage()));
         });
 
-        return errorMap;
+
+        return errors;
     }
 }

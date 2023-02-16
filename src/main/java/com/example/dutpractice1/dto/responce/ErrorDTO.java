@@ -3,22 +3,23 @@ package com.example.dutpractice1.dto.responce;
 import java.util.List;
 
 public class ErrorDTO {
-    private List<String> errorMessage;
+    private String errorMessage;
     private String exceptionName;
 
     public ErrorDTO() {
     }
 
-    public ErrorDTO(List<String> errorMessage, String exceptionName) {
-        this.errorMessage = errorMessage;
+    public ErrorDTO( String exceptionName, String errorMessage) {
         this.exceptionName = exceptionName;
+        this.errorMessage = errorMessage;
+
     }
 
-    public List<String> getErrorMessage() {
+    public String getErrorMessage() {
         return errorMessage;
     }
 
-    public void setErrorMessage(List<String> errorMessage) {
+    public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
 
