@@ -50,7 +50,7 @@ public class PeopleService {
         return peopleRepository.findByEmail(email);
     }
 
-    public boolean existsByEmail(String email) {
+        public boolean existsByEmail(String email) {
         return peopleRepository.existsByEmail(email);
     }
 }

@@ -21,9 +21,9 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping()
 public class PeopleController {
-    public final PeopleService peopleService;
-    public final AuthService registrationService;
-    public final UserMapperService userMapperService;
+    private final PeopleService peopleService;
+    private final AuthService registrationService;
+    private final UserMapperService userMapperService;
 
     public PeopleController(PeopleService peopleService, AuthService registrationService, UserMapperService userMapperService) {
         this.peopleService = peopleService;

@@ -22,7 +22,6 @@ public class AuthService {
     private final PeopleRepository peopleRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-    private final PeopleService peopleService;
     private final UserMapperService userMapperService;
     private final PersonValidator personValidator;
 
@@ -30,7 +29,6 @@ public class AuthService {
         this.peopleRepository = peopleRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
-        this.peopleService = peopleService;
         this.userMapperService = userMapperService;
         this.personValidator = personValidator;
     }
@@ -43,7 +41,7 @@ public class AuthService {
         Person person = userMapperService.convertPersonDTOToPerson(personRegistration);
         person.setPassword(passwordEncoder.encode(person.getPassword()));
 
-        if (person.getRole() == null){
+        if (person.getRole() == null) {
             person.setRole("ROLE_USER");
         }
         peopleRepository.save(person);
@@ -51,17 +49,12 @@ public class AuthService {
         return userMapperService.convertToPersonInfoDTO(person);
     }
 
-    public PersonLoginDTO login(PersonLoginDTO personLoginDTO){
+    public PersonInfoDTO login(PersonLoginDTO personLoginDTO) {
         personValidator.validate(personLoginDTO);
 
         UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(
                 personLoginDTO.getEmail(), personLoginDTO.getPassword());
-
-        // Authenticate the user
-        Authentication authentication = authenticationManager.authenticate(authRequest);
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        securityContext.setAuthentication(authentication);
-
-        return personLoginDTO;
+        authenticationManager.authenticate(authRequest);
+        return userMapperService.convertPersonLoginDTOToPersonInfoDTO(personLoginDTO);
     }
 }

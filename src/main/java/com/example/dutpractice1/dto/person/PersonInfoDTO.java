@@ -1,7 +1,6 @@
 package com.example.dutpractice1.dto.person;
 
-import javax.persistence.Column;
-import javax.validation.constraints.Email;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -15,6 +14,8 @@ public class PersonInfoDTO extends PersonDTO{
     private int yearOfBirth;
 
     private String role;
+
+    private String jwtToken;
 
     public String getUsername() {
         return username;
@@ -38,5 +39,13 @@ public class PersonInfoDTO extends PersonDTO{
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getJwtToken() {
+        return jwtToken;
+    }
+
+    public void setJwtToken(String jwtToken) {
+        this.jwtToken = jwtToken;
     }
 }

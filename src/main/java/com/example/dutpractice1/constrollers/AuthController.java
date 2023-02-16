@@ -4,11 +4,16 @@ package com.example.dutpractice1.constrollers;
 import com.example.dutpractice1.dto.person.PersonInfoDTO;
 import com.example.dutpractice1.dto.person.PersonLoginDTO;
 import com.example.dutpractice1.dto.person.PersonRegistrationDTO;
+import com.example.dutpractice1.security.JWTUtil;
 import com.example.dutpractice1.services.AuthService;
 import com.example.dutpractice1.services.UserMapperService;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Map;
 
 
 @RestController
@@ -16,23 +21,28 @@ import javax.validation.Valid;
 public class AuthController {
 
     private final AuthService registrationService;
-    public final UserMapperService userMapperService;
+    private final JWTUtil jwt;
 
-    public AuthController( AuthService registrationService, UserMapperService userMapperService) {
-
+    public AuthController(AuthService registrationService, JWTUtil jwt) {
         this.registrationService = registrationService;
-        this.userMapperService = userMapperService;
+        this.jwt = jwt;
     }
 
-
-
     @PostMapping("/login")
-    public PersonLoginDTO loginPage(@RequestBody @Valid PersonLoginDTO personLoginDTO){
-        return registrationService.login(personLoginDTO);
+    public PersonInfoDTO loginPage(@RequestBody @Valid PersonLoginDTO personLoginDTO) {
+        String token = jwt.generateToken(personLoginDTO.getEmail());
+        PersonInfoDTO response = registrationService.login(personLoginDTO);
+        response.setJwtToken(token);
+        return response;
     }
 
     @PostMapping("/registration")
     public PersonInfoDTO performRegistration(@RequestBody @Valid PersonRegistrationDTO personRegistrationDTO) {
-        return registrationService.register(personRegistrationDTO);
+        String token = jwt.generateToken(personRegistrationDTO.getEmail());
+        PersonInfoDTO response = registrationService.register(personRegistrationDTO);
+        response.setJwtToken(token);
+        return response;
     }
+
+
 }
