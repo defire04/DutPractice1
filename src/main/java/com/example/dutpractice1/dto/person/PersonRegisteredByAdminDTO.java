@@ -6,7 +6,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-public class PersonRegisteredByAdmin extends PersonDTO implements IPersonRegistration{
+public class PersonRegisteredByAdminDTO extends PersonDTO implements IPersonRegistration{
     @NotEmpty(message = "Name should be not empty!")
     @Size(min = 2, max = 100, message = "Name should be between 2 and 100 characters")
     private String username;

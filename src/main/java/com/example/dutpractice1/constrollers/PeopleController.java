@@ -1,6 +1,6 @@
 package com.example.dutpractice1.constrollers;
 
-import com.example.dutpractice1.dto.person.PersonRegisteredByAdmin;
+import com.example.dutpractice1.dto.person.PersonRegisteredByAdminDTO;
 import com.example.dutpractice1.dto.person.PersonInfoDTO;
 import com.example.dutpractice1.models.Person;
 import com.example.dutpractice1.security.PersonDetails;
@@ -42,8 +42,8 @@ public class PeopleController {
     }
 
     @PostMapping("/create")
-    public PersonInfoDTO create(@RequestBody @Valid PersonRegisteredByAdmin personRegisteredByAdmin) {
-        return registrationService.register(personRegisteredByAdmin);
+    public PersonInfoDTO create(@RequestBody @Valid PersonRegisteredByAdminDTO personRegisteredByAdminDTO) {
+        return registrationService.register(personRegisteredByAdminDTO);
     }
 
     @PatchMapping("/update/{id}")
